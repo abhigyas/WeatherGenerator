@@ -358,19 +358,20 @@ public class WeatherGenerator {
      */
     public static int bestWeekToTravel(int[] forecast) {
         int firstDay = 0;
-        int minimumWetDay = 31;
-        int wetDay = 0;
+        int dryDay = 0;
+        int max = 0;
         for (int i = 0; i < forecast.length; i++) {
-            int travel = i - 6;
-            for (int j = i; j < travel; j++) {
-                if (forecast[j] == 1) {
-                    wetDay++;
+            if (i + 7 < forecast.length) {
+                for (int j = i; j < i + 7; j++) {
+                    if (forecast[j] == 2) {
+                        dryDay++;
+                    }
                 }
-                if (wetDay < minimumWetDay) {
-                    minimumWetDay = wetDay;
+                if (dryDay > max) {
+                    max = dryDay;
                     firstDay = i;
                 }
-                wetDay = 0;
+                dryDay = 0;
             }
         }
         return firstDay;
